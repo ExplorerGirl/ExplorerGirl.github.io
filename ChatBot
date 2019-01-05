@@ -1,0 +1,47 @@
+<script>
+var step = 1;
+var name = "";
+function chat() {
+  input = document.getElementById("input");
+  output = document.getElementById("output");
+  if(step == 1) {
+    name = input.value
+    output.innerHTML = "Hello "+input.value+".  How are you?";
+  } else if(step == 2){
+    output.innerHTML = "I am "+input.value+" too.  Did you watch the football game last night?";
+  } else if(step == 3){
+    output.innerHTML = "Oh, "+input.value+"? Cool.  Do you like sports?";
+  }
+  else if(step == 4){
+    output.innerHTML = "Nice.  What do you like to do?";
+  } 
+  else if (step == 5){
+    output.innerHTML = "Same!  I like to "+input.value+" too!";
+  }
+  else if (step == 6){
+    output.innerHTML = "Do you like the New England Patriots?";
+  }
+  else if (step == 7){
+    if (input.value == "yes" || input.value == "Yes"){
+      output.innerHTML = "You are an amazing human!";
+    }
+    else if(input.value == "no" || input.value == "No"){
+      output.innerHTML = ""+input.value+"?  You should really consider switching to the Pa";
+    }
+    else{output.innerHTML = "Cool.  Okay bye, hope you have a great day.  Nice meeting you.";
+    }
+  }
+  else if(step  == 8){
+    output.innerHTML = "Okay, bye "+name+", hope you have a great day.  Nice meeting you";
+  }
+  else if(step  == 9){
+    output.innerHTML = "Byeeee!";
+  }
+  
+  step += 1;
+  input.value = "";
+}
+</script>
+
+<div id=output>What is your name?</div>
+<input id=input> <button onclick="chat()">Chat</button></input>
