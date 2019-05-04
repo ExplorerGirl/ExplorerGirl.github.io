@@ -1,0 +1,200 @@
+
+
+
+/** 
+to change your color, press one of the keys below.
+
+ * red : r
+ * orange : o
+ * yellow : y
+ * lime green : l
+ * dark green : g
+ * sky blue : s
+ * navy : n
+ * indigo : i
+ * violet : v
+ * hot pink : h
+ * magenta : m
+ * white : w
+ * tan : t
+ * chocolate : c
+ * black : b
+
+**/
+
+
+var paintColor = color(0, 0, 0);
+
+//define variables
+{    
+    var currentScene;
+    var darkBlueColor = color(26, 64, 186);
+    var whiteColor = color(255, 255, 255);
+    var blackColor = color(0, 0, 0);
+    var lightBlueColor = color(0, 168, 235);
+    textAlign(CENTER, CENTER);
+    textFont(createFont("cursive"));
+}
+
+//Button Code
+{
+var Button = function(btnColor, btnX, btnY, btnWidth, btnHeight, btnTextColor, btnTextSize, btnText){
+    this.btnColor = btnColor;
+    this.btnX = btnX;
+    this.btnY = btnY;
+    this.btnWidth = btnWidth;
+    this.btnHeight = btnHeight;
+    this.btnTextColor = btnTextColor;
+    this.btnTextSize = btnTextSize;
+    this.btnText = btnText;
+};
+
+Button.prototype.draw = function() {
+    stroke(0, 0, 0);
+    fill(this.btnColor);
+    rect(this.btnX - this.btnWidth/2, this.btnY - this.btnHeight/2, this.btnWidth, this.btnHeight);
+    fill(this.btnTextColor);
+    textSize(this.btnTextSize);
+    text(this.btnText, this.btnX, this.btnY);
+    
+};
+
+Button.prototype.isMouseInside = function(){
+    return  mouseX > (this.btnX - this.btnWidth/2) &&
+            mouseX < (this.btnX + this.btnWidth/2) &&
+            mouseY > (this.btnY - this.btnHeight/2) &&
+            mouseY < (this.btnY + this.btnHeight/2);
+};
+
+var freeDrawButton = new Button(lightBlueColor, 105, 300, 150, 50, whiteColor, 25, "Free Draw");
+var coloringPageButton = new Button(lightBlueColor, 295, 300, 150, 50, whiteColor, 21, "Coloring Page");
+}
+//var colorChooserButton = new Button(lightBlueColor, 5, 5, 150, 50, whiteColor, 23, "Color Picker");
+
+var drawMainPage = function(){
+    currentScene = 1;
+    background(darkBlueColor);
+    freeDrawButton.draw();
+    coloringPageButton.draw();
+    fill(whiteColor);
+    textSize(40);
+    text("Drawing & Coloring", 200, 60);
+    textSize(16);
+    text("Click on one of the buttons below to either free draw or color a coloring page. On the screen to the right, you can learn how to change your paint color. To draw, press down and drag. If you would like to return to this page after clicking on a button, click the restart button below this screen.", 20, 70, 360, 200);
+
+};
+var drawFreeDrawPage = function(){
+    currentScene = 2;
+    background(whiteColor);
+};
+
+var drawColoringPage = function(){
+    currentScene = 3;
+    background(whiteColor);
+    strokeWeight(7);
+    fill(whiteColor);
+    
+//draw border circles    
+    for(var c = 60; c < 360; c += 70){
+        ellipse(c, 380, 40, 20);
+        ellipse(c, 20, 40, 20);
+    }
+    
+    for(var t = 60; t < 360; t += 70){
+        ellipse(20, t, 20, 40);
+        ellipse(380, t, 20, 40);
+    
+    }
+//draw triangles
+    triangle(150, 350, 200, 300, 250, 350);
+    triangle(50, 150, 100, 200, 50, 250);
+    triangle(150, 50, 200, 100, 250, 50);
+    triangle(350, 150, 300, 200, 350, 250);
+    
+
+//draw cross lines
+    line(0, 0, 400, 400);
+    line(400, 0, 0, 400);
+    
+//draw second, bigger, flower
+    ellipse(250, 250, 100, 100);    
+    ellipse(150, 150, 100, 100);
+    ellipse(150, 250, 100, 100);
+    ellipse(250, 150, 100, 100);
+
+//draw center flower
+    bezier(200, 200, 300, 100, 300, 300, 200, 200);
+    bezier(200, 200, 100, 300, 300, 300, 200, 200);
+    bezier(200, 200, 100, 100, 300, 100, 200, 200);
+    bezier(200, 200, 100, 100, 100, 300, 200, 200);
+    ellipse(200, 200, 30, 30);
+};
+
+//button clicking
+mouseClicked = function(){
+  if(currentScene === 1 && freeDrawButton.isMouseInside()){
+    drawFreeDrawPage();
+  }  
+  else if(currentScene === 1 && coloringPageButton.isMouseInside()){
+      drawColoringPage();
+  }
+};
+
+//coloring code
+mouseDragged = function() {
+    if (currentScene === 2 || currentScene === 3) {
+        noStroke();
+        fill(paintColor);
+        ellipse(mouseX, mouseY, 20, 20);
+    }
+};
+
+keyPressed = function(){
+    var keyName = String.fromCharCode(key);
+    if(keyName === "r"){
+        paintColor = color(255, 0, 0);
+    }
+    else if(keyName === "o"){
+        paintColor = color(255, 132, 0);
+    }
+    else if(keyName === "y"){
+        paintColor = color(255, 255, 0);
+    }
+    else if(keyName === "l"){
+        paintColor = color(70, 250, 25);
+    }
+    else if(keyName === "g"){
+        paintColor = color(51, 140, 74);
+    }
+    else if(keyName === "s"){
+        paintColor = color(56, 240, 240);
+    }
+    else if(keyName === "n"){
+        paintColor = color(17, 0, 255);
+    }
+    else if(keyName === "i"){
+        paintColor = color(135, 23, 209);
+    }
+    else if(keyName === "v"){
+        paintColor = color(234, 0, 255);
+    }
+    else if(keyName === "p"){
+        paintColor = color(247, 69, 176);
+    }
+    else if(keyName === "m"){
+        paintColor = color(201, 6, 117);
+    }
+    else if(keyName === "w"){
+        paintColor = color(255, 255, 255);
+    }
+    else if(keyName === "t"){
+        paintColor = color(191, 146, 101);
+    }
+    else if(keyName === "c"){
+        paintColor = color(107, 75, 42);
+    }
+    else if(keyName === "b"){
+        paintColor = color(0, 0, 0);
+    }
+};
+drawMainPage();
